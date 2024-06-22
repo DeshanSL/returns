@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Src\Returns.csproj" />
+    <ProjectReference Include="..\src\Returns.csproj" />
   </ItemGroup>
 
 </Project>

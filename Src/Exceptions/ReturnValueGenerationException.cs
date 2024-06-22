@@ -1,8 +1,8 @@
 namespace Returns.Exceptions;
 
-public class ReturnsValueGenerationException : Exception
+internal class ReturnsValueGenerationException : Exception
 {
-    public ReturnsValueGenerationException(string message) : base(message)
+    internal ReturnsValueGenerationException(string message) : base(message)
     {
     }
 }

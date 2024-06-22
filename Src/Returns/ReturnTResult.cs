@@ -63,7 +63,7 @@ public readonly partial struct Return<TResult>
     private Return(Fault error)
     {
         _value = default(TResult);
-        _errors = error is null ? [DefaultError.Create("Operation was not successful.")] : [error];
+        _errors = error is null ? [ReturnError.Create("Return was not successful.")] : [error];
         IsSuccessful = false;
     }
 
@@ -80,6 +80,10 @@ public readonly partial struct Return<TResult>
         _value = default(TResult);
         _errors = errors;
         IsSuccessful = false;
+    }
+    public Return()
+    {
+        throw new InvalidConstructorCallException("Parameterless constructor should not be called.");
     }
 
 }
