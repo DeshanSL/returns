@@ -9,8 +9,6 @@ public readonly partial struct Return<TResult>
     /// <typeparam name="TResult"></typeparam>
     /// <returns></returns>
     public static Return<TResult> Success(TResult result) => new Return<TResult>(result);
-  
-
     /// <summary>
     ///  Notifies failure with one fault 
     /// </summary>
@@ -30,6 +28,6 @@ public readonly partial struct Return<TResult>
     /// </summary>
     /// <typeparam name="TResult"></typeparam>
     /// <returns></returns>
-    public static Return<TResult> Failure() => new Return<TResult>(DefaultError.Create("Undifined.Error"));
+    public static Return<TResult> Failure() => ReturnError.Create("Undifined.Error");
 
 }

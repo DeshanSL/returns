@@ -7,7 +7,7 @@ public readonly partial struct Return<TResult>
     /// </summary>
     /// <param name="result">Result value when operation is success</param>
     /// <typeparam name="TResult">Type of the result</typeparam>
-    public static implicit operator Return<TResult>(TResult? result) => new Return<TResult>(result);
+    public static implicit operator Return<TResult>(TResult result) => new Return<TResult>(result);
     /// <summary>
     /// Allows to return any implementation of fault abstration.
     /// </summary>

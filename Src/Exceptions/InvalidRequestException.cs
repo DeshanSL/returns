@@ -1,9 +1,8 @@
 namespace Returns.Exceptions;
 
-public sealed class InvalidRequestException : Exception
+internal sealed class InvalidRequestException : Exception
 {
-    public InvalidRequestException(string message): base(message)
+    internal InvalidRequestException(string message) : base(message)
     {
-        
     }
 }

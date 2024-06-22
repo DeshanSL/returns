@@ -19,21 +19,34 @@ public readonly partial struct Return
         _errors = faults;
         IsSuccessful = false;
     }
-
+    /// <summary>
+    /// Sets IsSuccess to false and assign the error passed. 
+    /// </summary>
+    /// <param name="fault"></param>
     private Return(Fault fault)
     {
         _errors = [fault];
         IsSuccessful = false;
     }
-
+    /// <summary>
+    /// Creates successful return if true and else create error return with <see cref="ReturnError"/> type 
+    /// </summary>
+    /// <param name="isSuccessful">true if successful.</param>
     private Return(bool isSuccessful)
     {
         _errors = null;
         IsSuccessful = isSuccessful;
         if(!isSuccessful)
         {
-            _errors = [DefaultError.Create("Operation was not successful.")];
+            _errors = [ReturnError.Create("Operation was not successful.")];
         }
+    }
+    /// <summary>
+    /// Throwing <see cref="InvalidConstructorCallException"/> 
+    /// </summary>
+    public Return()
+    {
+        throw new InvalidConstructorCallException("Parameterless constructor should not be called.");
     }
 
 }
