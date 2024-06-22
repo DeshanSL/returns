@@ -5,10 +5,25 @@ namespace Returns;
 public readonly partial struct Return 
 {
     private List<Fault>? _errors { get; }
-
+    /// <summary>
+    /// true if return is successful.
+    /// </summary>
+    /// <value></value>
     public readonly bool IsSuccessful { get; }
+    /// <summary>
+    /// true if return is not successful. 
+    /// </summary>
     public readonly bool IsFailure => !IsSuccessful;
-    public Fault Error => IsFailure ? _errors!.First()! : throw new InvalidRequestException("Return was successful. No errors were generated.");
+    /// <summary>
+    /// Returns error or first error of the list. 
+    /// </summary>
+    /// <returns></returns>
+    public Fault Error => IsFailure ? _errors!.First() 
+    : throw new InvalidRequestException("Return was successful. No errors were generated.");
+    /// <summary>
+    /// Returns error list as readonly. 
+    /// </summary>
+    /// <returns></returns>
      public IReadOnlyList<Fault> Errors => IsFailure ? _errors!.AsReadOnly()
     : throw new InvalidRequestException("Return was successful. No errors were generated.");
  
