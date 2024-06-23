@@ -20,7 +20,7 @@ public readonly partial struct Return<TResult>
     /// </summary>
     /// <returns cref="TResult">Value returned.</returns>
     /// <exception cref="InvalidRequestException">When try to read value with failure result.</exception>
-    public TResult? Value => IsSuccessful ? _value
+    public TResult Value => _value is not null && IsSuccessful ? (TResult)_value
     : throw new InvalidRequestException("Value can not be read when result is failure.");
 
     /// <summary>
