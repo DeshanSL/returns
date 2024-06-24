@@ -8,7 +8,7 @@ or nuget using Nuget package manager GUI by searching DeepCode.Return
 ```bash
 dotnet add package DeepCode.Return --version 1.0.1
 ```
-
+## How To Use
 #### Define method return type with Return struct with TResult type parameter
 
 TResult is type of the return
