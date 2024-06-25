@@ -129,6 +129,5 @@ public record OrderCreationErrors : Fault
     public static OrderCreationErrors CustomerBlacklisted =>
         new OrderCreationErrors("Customer with the given customerId has been blacklisted.");
 }
-'''
-
+```
 
