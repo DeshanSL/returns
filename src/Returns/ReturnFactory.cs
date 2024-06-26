@@ -1,6 +1,6 @@
 namespace Returns;
 
-public readonly partial struct Return
+public readonly partial record struct Return
 {
     /// <summary>
     /// When result is success 

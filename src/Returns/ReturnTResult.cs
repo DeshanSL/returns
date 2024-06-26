@@ -2,7 +2,7 @@ using Returns.Exceptions;
 
 namespace Returns;
 
-public readonly partial struct Return<TResult>  
+public readonly partial record struct Return<TResult>  
 {
     /// <summary>
     /// Holds the value returned if operation is successful. 

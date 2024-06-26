@@ -2,7 +2,7 @@ using Returns.Exceptions;
 
 namespace Returns;
 
-public readonly partial struct Return 
+public readonly partial record struct Return 
 {
     private List<Fault>? _errors { get; }
     /// <summary>
