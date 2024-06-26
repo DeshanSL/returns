@@ -115,10 +115,19 @@ return Fault.ReturnError();
  }
 ```
 
+#### Define custom error types
 
+Need to be inherited from Fault record
+```csharp
+public record OrderCreationErrors : Fault
+{
+    public OrderCreationErrors(string message, string? description = null) : base(message, description) { }
 
+    public static OrderCreationErrors InvalidCustomerIdForOrderCreation =>
+        new OrderCreationErrors("Could not find matching customer to the given customerId.");
 
-
-
-
+    public static OrderCreationErrors CustomerBlacklisted =>
+        new OrderCreationErrors("Customer with the given customerId has been blacklisted.");
+}
+```
 
