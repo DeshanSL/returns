@@ -130,4 +130,64 @@ public record OrderCreationErrors : Fault
         new OrderCreationErrors("Customer with the given customerId has been blacklisted.");
 }
 ```
+#### Using Match 
+
+Match method can be used to trigger actions when some return is success or failure.
+
+Trigger actions with no return type.
+```csharp
+Return<Order> orderCreateResult = CreateOrder(100);
+
+orderCreateResult.Match(
+    onSuccess: (value) => _logger.Info($"{value.Id} Order created successfully."),
+    onFailure: (errors) => _logger.Error("Failed to create order.")
+    );
+
+//Match first error of errors if failure.
+orderCreateResult.MatchFirst(
+    onSuccess: (value) => _logger.Info($"{value.Id} Order created successfully."),
+    onFailure: (error) => _logger.Error("Failed to create order.")
+    );
+
+orderCreateResult.MatchAsync(
+    onSuccess: async (value) =>
+    {
+        // Simulating async process
+        await Task.Delay(100);
+        _logger.Info($"{value.Id} Order created successfully.");
+    },
+    onFailure: async (errors) =>
+    {
+        // Simulating async process
+        await Task.Delay(100);
+        _logger.Error("Failed to create order.");
+    });
+
+```
+
+Match using TNextValue type, has return after match
+
+```csharp
+ Return<Order> orderCreateResult = Return<Order>.Success(new Order());
+
+ Response<Order> response = orderCreateResult.Match<Response<Order>>(
+     onSuccess:(order) => new Response<Order>() { Data = order },
+     onFailure:(errors) => new Response<Order>() { Error = new { Error = errors.ToList() } });
+
+//gets first error of the list as the arg when failure.
+ Response<Order> response = orderCreateResult.MatchFirst<Response<Order>>(
+     onSuccess:(order) => new Response<Order>() { Data = order },
+     onFailure:(error) => new Response<Order>() { Error = new { Error = errors.ToList() } });
+
+
+ Response<Order> response = orderCreateResult.MatchAsync<Response<Order>>(
+     onSuccess: async (order) => {},
+     onFailure: async (errors) => {});
+
+//gets first error of the list as the arg when failure.
+ Response<Order> response = orderCreateResult.MatchFirstAsync<Response<Order>>(
+     onSuccess: async (order) => {},
+     onFailure: async (error) => {});
+```
+
 
