@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <PackageId>DeepCode.Return</PackageId>
     <Title>Returns</Title>
-    <Version>1.0.1</Version>
+    <Version>1.1.0</Version>
     <Authors>Kavindu Deshan</Authors>
     <Company>Kavindu Deshan</Company>
     <Product>Returns</Product>
