@@ -8,7 +8,7 @@ public readonly partial record struct Return<TResult>
     /// Holds the value returned if operation is successful. 
     /// </summary>
     /// <value></value>
-    private readonly TResult? _value { get; }
+    private readonly TResult _value { get; }
     /// <summary>
     /// Holds Fault/Error if operation was failed. 
     /// </summary>
@@ -20,7 +20,7 @@ public readonly partial record struct Return<TResult>
     /// </summary>
     /// <returns cref="TResult">Value returned.</returns>
     /// <exception cref="InvalidRequestException">When try to read value with failure result.</exception>
-    public TResult Value => _value is not null && IsSuccessful ? (TResult)_value
+    public TResult Value =>  IsSuccessful ? (TResult)_value
     : throw new InvalidRequestException("Value can not be read when result is failure.");
 
     /// <summary>
@@ -62,7 +62,7 @@ public readonly partial record struct Return<TResult>
     /// <param name="error"></param>
     private Return(Fault error)
     {
-        _value = default(TResult);
+        _value = default(TResult)!;
         _errors = error is null ? [ReturnError.Create("Return was not successful.")] : [error];
         IsSuccessful = false;
     }
@@ -77,7 +77,7 @@ public readonly partial record struct Return<TResult>
         {
             throw new ReturnsValueGenerationException("At least one error should be in the error list.");
         }
-        _value = default(TResult);
+        _value = default(TResult)!;
         _errors = errors;
         IsSuccessful = false;
     }
