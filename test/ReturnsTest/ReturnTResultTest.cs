@@ -6,48 +6,57 @@ namespace ReturnsTest;
 public class ReturnTResultTest
 {
 
-   [Fact]
-   public void IsSuccessful_Is_True_And_IsFailure_Is_False_When_Return_Success()
-   {
-      string message = "Success.Message";
-      Return<string> result = Return<string>.Success(message);
+    [Fact]
+    public void IsSuccessful_Is_True_And_IsFailure_Is_False_When_Return_Success()
+    {
+        string message = "Success.Message";
+        Return<string> result = Return<string>.Success(message);
 
-      Assert.True(result.IsSuccessful);
-      Assert.False(result.IsFailure);
-      Assert.Throws<InvalidRequestException>(() => result.Errors);
-      Assert.Throws<InvalidRequestException>(() => result.Error);
-   }
-   [Fact]
-   public void IsFailure_Is_True_And_IsSuccessful_Is_False_When_Return_Failure_With_Default_Error()
-   {
+        Assert.True(result.IsSuccessful);
+        Assert.False(result.IsFailure);
+        Assert.Throws<InvalidRequestException>(() => result.Errors);
+        Assert.Throws<InvalidRequestException>(() => result.Error);
+    }
+    [Fact]
+    public void IsFailure_Is_True_And_IsSuccessful_Is_False_When_Return_Failure_With_Default_Error()
+    {
 
-      var result = Return<string>.Failure();
-
-
-      Assert.True(result.IsFailure);
-      Assert.False(result.IsSuccessful);
-      Assert.IsType<ReturnError>(result.Error);
-   }
-   [Fact]
-   public void Errors_Are_Not_Null_When_Returns_Error()
-   {
-      string message = "Test message";
-      var result = Return<string>.Failure(new ReturnError(message));
+        var result = Return<string>.Failure();
 
 
-      Assert.NotNull(result.Error);
-      Assert.Equal(result.Error.Message, message);
-   }
+        Assert.True(result.IsFailure);
+        Assert.False(result.IsSuccessful);
+        Assert.IsType<ReturnError>(result.Error);
+    }
+    [Fact]
+    public void Errors_Are_Not_Null_When_Returns_Error()
+    {
+        string message = "Test message";
+        var result = Return<string>.Failure(new ReturnError(message));
 
-   [Fact]
-   public void Errors_Are_Not_Null_When_Return_Is_List_Of_Errors()
-   {
-      List<Fault> errors = [Conflict.Create("Conflict.Error"), ReturnError.Create("Default.Error")];
-      Return<string> result = Return<string>.Failure(errors);
 
-      Assert.Equal(errors, result.Errors);
-      Assert.Equal(errors.First(), result.Error);
+        Assert.NotNull(result.Error);
+        Assert.Equal(result.Error.Message, message);
+    }
 
-   }
+    [Fact]
+    public void Errors_Are_Not_Null_When_Return_Is_List_Of_Errors()
+    {
+        List<Fault> errors = [Conflict.Create("Conflict.Error"), ReturnError.Create("Default.Error")];
+        Return<string> result = Return<string>.Failure(errors);
+
+        Assert.Equal(errors, result.Errors);
+        Assert.Equal(errors.First(), result.Error);
+
+    }
+
+    [Fact]
+    public void Return_Null_As_Value_When_Type_Is_Nullable()
+    {
+        string? value = null;
+        Return<string?> result = value;
+
+        Assert.Null(result.Value);
+    }
 
 }
