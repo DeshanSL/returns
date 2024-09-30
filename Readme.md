@@ -5,10 +5,13 @@
 #### Install nuget package using .Net CLI
 
 or nuget using Nuget package manager GUI by searching DeepCode.Return
+
 ```bash
 dotnet add package DeepCode.Return --version 1.0.1
 ```
+
 ## How To Use
+
 #### Define method return type with Return struct with TResult type parameter
 
 TResult is type of the return
@@ -26,7 +29,9 @@ internal class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, R
     }
 }
 ```
+
 for non async methods
+
 ```csharp
 public Return<Order> CreateOrder(CreateOrder request, CancellationToken cancellationToken)
 {
@@ -36,6 +41,7 @@ public Return<Order> CreateOrder(CreateOrder request, CancellationToken cancella
     return order;
 }
 ```
+
 #### Return struct can be used when there's no return value but to notify if function was success or not
 
 ```csharp
@@ -44,6 +50,7 @@ public Return SendEmail()
     return Return.Success();
 }
 ```
+
 ### How to extract if state is success
 
 ```csharp
@@ -80,6 +87,7 @@ Handle Conflicts,
 
  }
 ```
+
 #### Other in-built error type available
 
 ```csharp
@@ -87,6 +95,41 @@ Handle Conflicts,
 return Fault.NotFound();
 return Fault.InternalError();
 return Fault.ReturnError();
+```
+
+#### Type check errors for decision making
+
+```csharp
+
+Return<Order> result = GetOrder(id);
+
+if(result.IsFailure)
+{
+
+    if(result.IsErrorTypeOf<NotFound>())
+    {
+    // Not found logic goes here.
+    }
+
+    if(result.ErrorsContain<NotFound>())
+    {
+    // if error list contains Not found logic goes here.
+    }
+
+    if(result.Error.Is<Unauthorized>())
+    {
+    // Unauthorize logic goes here.
+    }
+
+    if(result.Errors.ContainsErrorType<NotFound>())
+    {
+    // Not found logic goes here.
+    }
+
+}
+
+
+
 ```
 
 #### Handle Errors from caller method
@@ -118,6 +161,7 @@ return Fault.ReturnError();
 #### Define custom error types
 
 Need to be inherited from Fault record
+
 ```csharp
 public record OrderCreationErrors : Fault
 {
@@ -130,11 +174,13 @@ public record OrderCreationErrors : Fault
         new OrderCreationErrors("Customer with the given customerId has been blacklisted.");
 }
 ```
-#### Using Match 
+
+#### Using Match
 
 Match method can be used to trigger actions when some return is success or failure.
 
 Trigger actions with no return type.
+
 ```csharp
 Return<Order> orderCreateResult = CreateOrder(100);
 
@@ -189,5 +235,3 @@ Match using TNextValue type, has return after match
      onSuccess: async (order) => {},
      onFailure: async (error) => {});
 ```
-
-

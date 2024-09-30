@@ -1,8 +1,6 @@
 using Returns;
 
 namespace ReturnsTest;
-
-
 public class FaultTest
 {
     [Fact]
