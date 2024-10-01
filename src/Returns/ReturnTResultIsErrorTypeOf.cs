@@ -5,6 +5,12 @@ namespace Returns;
 
 public readonly partial record struct Return<TResult>
 {
+    /// <summary>
+    /// True if Error/Fault type is matching to TFault Type
+    /// </summary>
+    /// <typeparam name="TFault"></typeparam>
+    /// <returns></returns>
+    /// <exception cref="InvalidRequestException"></exception>
     public bool IsErrorTypeOf<TFault>() where TFault : Fault
     {
         if (!IsFailure)
@@ -21,7 +27,12 @@ public readonly partial record struct Return<TResult>
             return false;
         }
     }
-
+    /// <summary>
+    /// Returns true if errors contain TFault Type error
+    /// </summary>
+    /// <typeparam name="TFault"></typeparam>
+    /// <returns></returns>
+    /// <exception cref="InvalidRequestException"></exception>
     public bool ErrorsContain<TFault>() where TFault : Fault
     {
         if (!IsFailure)
