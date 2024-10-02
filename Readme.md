@@ -125,6 +125,11 @@ if(result.IsFailure)
     // Not found logic goes here.
     }
 
+    if(result.Errors.ContainsErrorType<OrderCreateError>())
+    {
+    // if custom error type
+    }
+
 }
 
 
@@ -134,8 +139,7 @@ if(result.IsFailure)
 #### Handle Errors from caller method
 
 ```csharp
- public Return Main()
- {
+
      Return<Order> orderCreateResult = CreateOrder(100);
 
      if (orderCreateResult.IsFailure)
@@ -154,7 +158,7 @@ if(result.IsFailure)
          // Pass errors to call stack
          return orderCreateResult.Errors.ToList();
      }
- }
+ 
 ```
 
 #### Define custom error types
