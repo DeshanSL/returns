@@ -54,16 +54,15 @@ public Return SendEmail()
 ### How to extract if state is success
 
 ```csharp
-public void Main()
+
+Return<Order> orderCreateResult = CreateOrder(request, cancellationToken);
+if(orderCreateResult.IsFailure)
 {
-    Return<Order> orderCreateResult = CreateOrder(request, cancellationToken);
-    if(orderCreateResult.IsFailure)
-    {
-        // Failure code goes here
-    }
-    Order order = orderCreateResult.Value;
-    // success path here
+// Failure code goes here
 }
+Order order = orderCreateResult.Value;
+// success path here
+
 ```
 
 ### Error Handling
